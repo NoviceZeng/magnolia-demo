@@ -7,7 +7,7 @@ its deployment in k8s.
 
 Creates a webapp and docker container for Magnolia CMS using `io.fabric8:docker-maven-plugin`. It inherits from ```magnolia-empty-webapp``` 
 and relies on as little customizations as possible.
-
+![img.png](img.png)
 ### Run the container
 
 Pull and run the container:

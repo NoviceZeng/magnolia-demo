@@ -1,0 +1,84 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/magnolia-sre/magnolia-docker/magnolia-docker
+  pullPolicy: Always
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  name: http
+  port: 80
+  targetPort: 8080
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+  path: /
+  authorHost: author.magnoliademo.com
+  publicHost: public.magnoliademo.com
+  tls:
+
+resources:
+  limits:
+    memory: 2000Mi
+  requests:
+    cpu: 500m
+    memory: 1000Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+liveness:
+  httpGet:
+    path: /.rest/status
+    port: http
+  timeoutSeconds: 4
+  periodSeconds: 5
+  failureThreshold: 3
+  initialDelaySeconds: 90
+
+readiness:
+  httpGet:
+    path: /.rest/status
+    port: http
+  timeoutSeconds: 4
+  periodSeconds: 6
+  failureThreshold: 3
+  initialDelaySeconds: 90
+
+startupProbe:
+  httpGet:
+    path: /.rest/status
+    port: http
+  failureThreshold: 30
+  periodSeconds: 6
+
+env:
+  author:
+    - name: JAVA_OPTS
+      value: >-
+        -Dmagnolia.bootstrap.authorInstance=true
+        -Dmagnolia.update.auto=true
+        -Dmagnolia.home=/opt/magnolia
+
+  public:
+    - name: JAVA_OPTS
+      value: >-
+        -Dmagnolia.bootstrap.authorInstance=false
+        -Dmagnolia.update.auto=true
+        -Dmagnolia.home=/opt/magnolia
