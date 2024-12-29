@@ -6,7 +6,7 @@ on:
 
 jobs:
  build:
-   name: 'Maven: Build and upload artifact'
+   name: 'Maven for CI'
    runs-on: ubuntu-latest
 
    steps:
