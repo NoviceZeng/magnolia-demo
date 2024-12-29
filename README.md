@@ -4,7 +4,8 @@ This is a demo for deploy Magnolia CMS by helm chart in k8s installed by minikub
 
 # minikube
 1. Start k8s as below screenshot, for connect the cluster locally and CICD purpose, we set `--listen-address=0.0.0.0`, but for security reasones, we`d better to **configure a security group or firewall rules**.
-<img width="937" alt="image" src="https://github.com/user-attachments/assets/85e340e6-f91b-493d-b399-49d65771e610" />  
+<img width="937" alt="image" src="https://github.com/user-attachments/assets/85e340e6-f91b-493d-b399-49d65771e610" />
+
 2. Check port mappin of api server of 8443  
 ```
 docker port minikube
