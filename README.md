@@ -83,6 +83,20 @@ pod/magnolia-demo-author-0   1/1     Running   0          12m
 pod/magnolia-demo-public-0   1/1     Running   0          12m
 ```
 
+# Show
+Before we login, we need make `port-forward`
+```
+kubectl port-forward svc/magnolia-demo-author  8000:80
+kubectl port-forward svc/magnolia-demo-public  8001:80
+```
+Then we login by superuser/superuser
+## author
+<img width="1509" alt="image" src="https://github.com/user-attachments/assets/9e0d6ed7-85cf-4cb2-a55c-7d1a36a204bb" />
+## public
+<img width="1503" alt="image" src="https://github.com/user-attachments/assets/578c5b84-89c7-4899-802c-d2f479df8f70" />
+
 # CICD
 
-Refer to the [pipeline](.github/workflows/deploy_cms.yml) for more insights.
+Refer to the [pipeline](.github/workflows/deploy_cms.yml).
+
+
