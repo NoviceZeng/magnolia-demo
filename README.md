@@ -47,27 +47,42 @@ users:
     client-key: client.key
 ```
 
-Creates a webapp and docker container for Magnolia CMS using `io.fabric8:docker-maven-plugin`. It inherits from ```magnolia-empty-webapp``` 
-and relies on as little customizations as possible.
-![img.png](img.png)
-### Run the container
 
-Pull and run the container:
-`docker pull ghcr.io/magnolia-sre/magnolia-docker/magnolia-docker:latest`
+# Deploy CMS
+It is better to deploy by a CICD tools like Github workflow, Gitlab runner or Jenkins, but for test purpose, we use helm chart to manually deploy it.
+Use `helm install  mag magnoliachart  --dry-run --debug` for dry run first.  
+Use `helm install  mag magnoliachart  --dry-run --debug` to deploy directly.
+```
+root@iZj6ch0w241h6gs5syc4lsZ:~# helm list
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
+magnolia-demo   default         1               2024-12-29 17:14:29.99841 +0800 CST     deployed        magnolia-0.1.0  6.1.1      
+root@iZj6ch0w241h6gs5syc4lsZ:~# kubectl  get ingress,svc,pods
+NAME                                      CLASS    HOSTS                                             ADDRESS   PORTS   AGE
+ingress.networking.k8s.io/magnolia-demo   <none>   author.magnoliademo.com,public.magnoliademo.com             80      3m43s
 
-See: 
-[magnolia-sre/magnolia-docker Packages](https://github.com/orgs/magnolia-sre/packages/container/package/magnolia-docker%2Fmagnolia-docker)
+NAME                           TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes             ClusterIP   10.96.0.1      <none>        443/TCP   28m
+service/magnolia-demo-author   ClusterIP   10.109.43.63   <none>        80/TCP    3m43s
+service/magnolia-demo-public   ClusterIP   10.104.6.77    <none>        80/TCP    3m43s
 
-Default login username and password: superuser/superuser
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/magnolia-demo-author-0   1/1     Running   0          3m43s
+pod/magnolia-demo-public-0   1/1     Running   0          3m43s
+root@iZj6ch0w241h6gs5syc4lsZ:~# 
+root@iZj6ch0w241h6gs5syc4lsZ:~# kubectl  get ingress,svc,pods
+NAME                                      CLASS    HOSTS                                             ADDRESS   PORTS   AGE
+ingress.networking.k8s.io/magnolia-demo   <none>   author.magnoliademo.com,public.magnoliademo.com             80      12m
 
-It should be noted that Docker is no longer officially supported.
+NAME                           TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes             ClusterIP   10.96.0.1      <none>        443/TCP   37m
+service/magnolia-demo-author   ClusterIP   10.109.43.63   <none>        80/TCP    12m
+service/magnolia-demo-public   ClusterIP   10.104.6.77    <none>        80/TCP    12m
 
-## CI/CD
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/magnolia-demo-author-0   1/1     Running   0          12m
+pod/magnolia-demo-public-0   1/1     Running   0          12m
+```
 
-Refer to the [pipeline](.github/workflows/pipeline.yml) for more insights.
+# CICD
 
-## Simplifications
-
-* Uses H2 DB
-* No persistent storage
-* ..
+Refer to the [pipeline](.github/workflows/deploy_cms.yml) for more insights.
