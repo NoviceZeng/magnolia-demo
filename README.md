@@ -97,6 +97,6 @@ Then we login by superuser/superuser
 
 # CICD
 
-Refer to the [Workflow](https://github.com/NoviceZeng/magnolia-demo/blob/main/.github/workflows/deploy_cms.yaml).
+Refer to the [Workflow]([.github/workflows/deploy_cms.yml](https://github.com/NoviceZeng/magnolia-demo/blob/main/.github/workflows/deploy_cms.yaml)).
 
 
